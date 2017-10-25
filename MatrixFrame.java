@@ -46,6 +46,7 @@ public class MatrixFrame extends JFrame implements ActionListener {
 		
 		addButton.addActionListener(this);
 		scaleButton.addActionListener(this);
+		switchButton.addActionListener(this);
 		
 		for(int row = 0; row < rows; row++) {
 			for(int column = 0; column < columns; column++) {
@@ -61,10 +62,10 @@ public class MatrixFrame extends JFrame implements ActionListener {
 		add(opPanel, BorderLayout.SOUTH);
 	}
 	
-	public void addToRow(int addeeRow, int adderRow, int multiplier) {
+	public void addToRow(int addeeRow, int Row2, int multiplier) {
 		for(int c = 0; c < columns; c++) {
 			int addee = Integer.parseInt(matrix[addeeRow][c].getText());
-			int adder = Integer.parseInt(matrix[adderRow][c].getText());
+			int adder = Integer.parseInt(matrix[Row2][c].getText());
 			String sum = Integer.toString(addee + (multiplier * adder));
 			matrix[addeeRow][c].setText(sum);
 		}
@@ -78,8 +79,13 @@ public class MatrixFrame extends JFrame implements ActionListener {
 			matrix[row][c].setText(quotient);
 		}
 	}
-	public void switchRow() {
-		
+	public void switchRow(int row1, int row2) {
+		for(int c = 0; c < columns; c++) {
+			int newRow1Element = Integer.parseInt(matrix[row2][c].getText());
+			int newRow2Element = Integer.parseInt(matrix[row1][c].getText());
+			matrix[row1][c].setText(Integer.toString(newRow1Element));
+			matrix[row2][c].setText(Integer.toString(newRow2Element));
+		}
 	}
 	public void undo() {
 		
@@ -94,7 +100,7 @@ public class MatrixFrame extends JFrame implements ActionListener {
 			ScaleFrame addFrame = new ScaleFrame("Scale", 400, 300, rows);
 		}
 		if(event.getSource() == switchButton) {
-			
+			SwitchFrame switchFrame = new SwitchFrame("Switch", 400, 300, rows);
 		}
 		if(event.getSource() == undoButton) {
 			
