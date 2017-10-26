@@ -100,10 +100,19 @@ public class AdditionFrame extends JFrame implements ActionListener {
 		return 0;
 	}
 	
+	public int getMultiplier() {
+		try {
+			return Integer.parseInt(multiplierTextField.getText());
+		}
+		catch(Exception e) {
+			return 1;
+		}
+	}
+	
 	public void setAddArgs() {
 		arr[0] = getAddeeRow();
 		arr[1] = getAdderRow();
-		arr[2] = Integer.parseInt(multiplierTextField.getText());
+		arr[2] = getMultiplier();
 	}
 	
 	@Override

@@ -16,8 +16,9 @@ public class ScaleFrame extends JFrame implements ActionListener {
 	
 	private ButtonGroup group1 = new ButtonGroup();
 	private JRadioButton[] rowButtonArray;
-	private final JTextField divisorTextField = new JTextField(2);
-	private final JButton enterButton = new JButton("Enter");
+	private final JTextField scalarTextField = new JTextField(2);
+	private final JButton multiplyButton = new JButton("Multiply"),
+			divideButton = new JButton("Divide");
 	private final int rows;
 	private int[] arr = new int[2];
 	
@@ -27,7 +28,7 @@ public class ScaleFrame extends JFrame implements ActionListener {
 		this.rows = rows;
 		rowButtonArray = new JRadioButton[rows];
 		final JLabel scaleRowLabel = new JLabel("Row to Scale:"), 
-				divisorLabel = new JLabel("Divisor:");
+				scalarLabel = new JLabel("Scalar:");
 		final JPanel rowPanel = new JPanel(), 
 				bottomPanel = new JPanel();
 		
@@ -43,11 +44,13 @@ public class ScaleFrame extends JFrame implements ActionListener {
 		rowSubPanel.add(scaleRowLabel);
 		rowPanel.add(rowSubPanel);
 		
-		enterButton.addActionListener(this);
+		multiplyButton.addActionListener(this);
+		divideButton.addActionListener(this);
 		
-		bottomPanel.add(divisorLabel);
-		bottomPanel.add(divisorTextField);
-		bottomPanel.add(enterButton);
+		bottomPanel.add(scalarLabel);
+		bottomPanel.add(scalarTextField);
+		bottomPanel.add(multiplyButton);
+		bottomPanel.add(divideButton);
 		
 		for(int r = 0; r < rows; r++) {
 			rowSubPanel = new JPanel();
@@ -71,16 +74,30 @@ public class ScaleFrame extends JFrame implements ActionListener {
 		return 0;
 	}
 	
+	public int getScalar() {
+		try {
+			return Integer.parseInt(scalarTextField.getText());
+		}
+		catch(Exception e) {
+			return 1;
+		}
+	}
+	
 	public void setScaleArgs() {
 		arr[0] = getRow();
-		arr[1] = Integer.parseInt(divisorTextField.getText());
+		arr[1] = Integer.parseInt(scalarTextField.getText());
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		if(event.getSource() == enterButton) {
+		if(event.getSource() == multiplyButton) {
 			setScaleArgs();
-			Launcher.display1.display2.display3.scaleRow(arr[0], arr[1]);
+			Launcher.display1.display2.display3.multiplyRow(arr[0], arr[1]);
+			dispose();
+		}
+		if(event.getSource() == divideButton) {
+			setScaleArgs();
+			Launcher.display1.display2.display3.divideRow(arr[0], arr[1]);
 			dispose();
 		}
 	}
