@@ -142,9 +142,19 @@ public class MatrixFrame extends JFrame {
 	public void multiplyRow(int row, int multiplier) {
 		fixHistory();
 		for(int c = 0; c < columns; c++) {
-			int multiplicand = Integer.parseInt(matrixPanel.matrix[row][c].getText());
-			int product = multiplicand * multiplier;
-			matrixPanel.matrix[row][c].setText(Integer.toString(product));
+			String product;
+			try {
+				int multiplicand = Integer.parseInt(matrixPanel.matrix[row][c].getText());
+				product = Integer.toString(multiplicand * multiplier);
+			}
+			catch(Exception e) {
+				String multiplicand = matrixPanel.matrix[row][c].getText();
+				int[] arr = getNumAndDen(multiplicand);
+				arr[0] *= multiplier;
+				product = String.format("%s/%s", arr[0], arr[1]);
+				product = reduceFraction(getNumAndDen(product));
+			}
+			matrixPanel.matrix[row][c].setText(product);
 		}
 		fixHistory();
 		addToHistory();
@@ -250,6 +260,8 @@ public class MatrixFrame extends JFrame {
 				break;
 			}
 		}
+		if(arr[1] == 1)
+			return Integer.toString(arr[0]);
 		return String.format("%s/%s", arr[0], arr[1]);
 	}
 }
