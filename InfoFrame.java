@@ -1,4 +1,4 @@
-package matricestool;
+package row_operations_tool;
 
 
 
@@ -52,7 +52,7 @@ public class InfoFrame extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource() == enterButton) {
-			display2 = new MatrixFillInFrame("Matrices Tool", 500, 200, getRows(), getColumns());
+			display2 = new MatrixFillInFrame("Matrices Tool", 500, 300, getRows(), getColumns());
 			dispose();
 		}
 	}

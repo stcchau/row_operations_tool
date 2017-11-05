@@ -1,7 +1,7 @@
 /**
  * 
  */
-package matricestool;
+package row_operations_tool;
 
 import java.awt.*;
 import java.awt.event.*;
