@@ -38,7 +38,6 @@ public class AdditionFrame extends JFrame implements ActionListener {
 		setSize(length, width);
 		setLayout(new BorderLayout());
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		addeeRowPanel.setLayout(new GridLayout(rows + 1, 1));
 		adderRowPanel.setLayout(new GridLayout(rows + 1, 1));

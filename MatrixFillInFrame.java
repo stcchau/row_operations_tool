@@ -15,11 +15,9 @@ import javax.swing.*;
 public class MatrixFillInFrame extends JFrame implements ActionListener {
 	
 	private final JButton enterButton = new JButton("Enter Numbers");
-	private final JLabel errorMessage = new JLabel();
 	private final int rows;
 	private final int columns;
 	private JTextField[][] JTFMatrix;
-	private JPanel errorMessagePanel = new JPanel();
 	private JPanel textFieldPanel;
 	
 	public MatrixFrame display3;
@@ -36,13 +34,9 @@ public class MatrixFillInFrame extends JFrame implements ActionListener {
 		setLayout(new BorderLayout());
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		errorMessagePanel.setLayout(new FlowLayout());
-		errorMessagePanel.add(errorMessage);
-		
+
 		enterButton.addActionListener(this);
-		
-		add(errorMessagePanel, BorderLayout.NORTH);
+
 		add(textFieldPanel, BorderLayout.CENTER);
 		add(enterButton, BorderLayout.SOUTH);
 	}
@@ -75,7 +69,7 @@ public class MatrixFillInFrame extends JFrame implements ActionListener {
 			dispose();
 			}
 			catch(Exception e) {
-				errorMessage.setText("All inputs must be integers. Please try again.");
+				JOptionPane.showMessageDialog(null, "All inputs must be integers. Please try again.");
 			}
 		}
 	}

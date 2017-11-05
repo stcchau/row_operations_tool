@@ -33,7 +33,6 @@ public class SwitchFrame extends JFrame implements ActionListener {
 		setSize(length, width);
 		setLayout(new BorderLayout());
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		row1Panel.setLayout(new GridLayout(rows + 1, 1));
 		row2Panel.setLayout(new GridLayout(rows + 1, 1));

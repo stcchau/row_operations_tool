@@ -128,12 +128,29 @@ public class MatrixFrame extends JFrame {
 		}
 	}
 	
-	public void addToRow(int addeeRow, int Row2, int multiplier) {
+	public void addToRow(int addeeRow, int adderRow, int multiplier) {
 		fixHistory();
 		for(int c = 0; c < columns; c++) {
-			int addee = Integer.parseInt(matrixPanel.matrix[addeeRow][c].getText());
-			int adder = Integer.parseInt(matrixPanel.matrix[Row2][c].getText());
-			String sum = Integer.toString(addee + (multiplier * adder));
+			String sum;
+			try {
+				int addee = Integer.parseInt(matrixPanel.matrix[addeeRow][c].getText());
+				int adder = Integer.parseInt(matrixPanel.matrix[adderRow][c].getText());
+				sum = Integer.toString(addee + (multiplier * adder));
+			}
+			catch(Exception e) {
+				String addee = matrixPanel.matrix[addeeRow][c].getText();
+				String adder = matrixPanel.matrix[adderRow][c].getText();
+				int[] addeeFraction = getNumAndDen(addee);
+				int[] adderFraction = getNumAndDen(adder);
+				int lcm = getLCM(addeeFraction[1], adderFraction[1]);
+				addeeFraction[0] *= (lcm / addeeFraction[1]);
+				addeeFraction[1] = lcm;
+				adderFraction[0] *= (lcm / adderFraction[1]);
+				adderFraction[0] *= multiplier;
+				adderFraction[1] = lcm;
+				sum = String.format("%s/%s", addeeFraction[0] + adderFraction[0], lcm);
+				sum = reduceFraction(getNumAndDen(sum));
+			}
 			matrixPanel.matrix[addeeRow][c].setText(sum);
 		}
 		addToHistory();
@@ -227,28 +244,34 @@ public class MatrixFrame extends JFrame {
 	}
 	
 	public int[] getNumAndDen(String fraction) {
-		int count = 0;
-		String num = "";
-		String den = "";
 		int[] arr = new int[2];
-		for(int i = 0; i < fraction.length(); i++) {
-			if(Character.isDigit(fraction.charAt(i))) {
-				num += fraction.charAt(i);
+		try {
+			int count = 0;
+			String num = "";
+			String den = "";
+			for(int i = 0; i < fraction.length(); i++) {
+				if(Character.isDigit(fraction.charAt(i))) {
+					num += fraction.charAt(i);
+				}
+				else {
+					count = i;
+					break;
+				}
 			}
-			else {
-				count = i;
-				break;
+			arr[0] = Integer.parseInt(num);
+			for(int i = count + 1; i < fraction.length(); i++) {
+				if(Character.isDigit(fraction.charAt(i))) {
+					den += fraction.charAt(i);
+				}
+				else
+					break;
 			}
+			arr[1] = Integer.parseInt(den);
 		}
-		arr[0] = Integer.parseInt(num);
-		for(int i = count + 1; i < fraction.length(); i++) {
-			if(Character.isDigit(fraction.charAt(i))) {
-				den += fraction.charAt(i);
-			}
-			else
-				break;
+		catch(Exception e) {
+			arr[0] = Integer.parseInt(fraction);
+			arr[1] = 1;
 		}
-		arr[1] = Integer.parseInt(den);
 		return arr;
 	}
 	
@@ -263,5 +286,16 @@ public class MatrixFrame extends JFrame {
 		if(arr[1] == 1)
 			return Integer.toString(arr[0]);
 		return String.format("%s/%s", arr[0], arr[1]);
+	}
+	
+	public int getLCM(int den1, int den2) {
+		int min = Math.min(den1, den2);
+		int max = Math.max(den1, den2);
+		for(int i = 1; i <= max; i++) {
+			if((i * min) % max == 0) {
+				return i * min;
+			}
+		}
+		return (min * max);
 	}
 }

@@ -52,8 +52,12 @@ public class InfoFrame extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource() == enterButton) {
-			display2 = new MatrixFillInFrame("Matrices Tool", 500, 300, getRows(), getColumns());
-			dispose();
+			if(getRows() <= 0 || getColumns() <= 0)
+				JOptionPane.showMessageDialog(null, "All inputs must be nonzero. Please try again.");
+			else {
+				display2 = new MatrixFillInFrame("Matrices Tool", 500, 300, getRows(), getColumns());
+				dispose();
+			}
 		}
 	}
 }

@@ -35,7 +35,6 @@ public class ScaleFrame extends JFrame implements ActionListener {
 		setSize(length, width);
 		setLayout(new BorderLayout());
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		rowPanel.setLayout(new GridLayout(rows + 1, 1));
 		
@@ -85,7 +84,7 @@ public class ScaleFrame extends JFrame implements ActionListener {
 	
 	public void setScaleArgs() {
 		arr[0] = getRow();
-		arr[1] = Integer.parseInt(scalarTextField.getText());
+		arr[1] = getScalar();
 	}
 	
 	@Override
@@ -97,8 +96,12 @@ public class ScaleFrame extends JFrame implements ActionListener {
 		}
 		if(event.getSource() == divideButton) {
 			setScaleArgs();
-			Launcher.display1.display2.display3.divideRow(arr[0], arr[1]);
-			dispose();
+			if(arr[1] == 0)
+				JOptionPane.showMessageDialog(null, "Cannot divide by 0. Please try again.");
+			else {
+				Launcher.display1.display2.display3.divideRow(arr[0], arr[1]);
+				dispose();
+			}
 		}
 	}
 }
