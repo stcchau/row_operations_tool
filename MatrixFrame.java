@@ -250,7 +250,7 @@ public class MatrixFrame extends JFrame {
 			String num = "";
 			String den = "";
 			for(int i = 0; i < fraction.length(); i++) {
-				if(Character.isDigit(fraction.charAt(i))) {
+				if(Character.isDigit(fraction.charAt(i)) || fraction.substring(i,i + 1).equals("-")) {
 					num += fraction.charAt(i);
 				}
 				else {
@@ -260,7 +260,7 @@ public class MatrixFrame extends JFrame {
 			}
 			arr[0] = Integer.parseInt(num);
 			for(int i = count + 1; i < fraction.length(); i++) {
-				if(Character.isDigit(fraction.charAt(i))) {
+				if(Character.isDigit(fraction.charAt(i)) || fraction.substring(i,i + 1).equals("-")) {
 					den += fraction.charAt(i);
 				}
 				else
@@ -271,6 +271,10 @@ public class MatrixFrame extends JFrame {
 		catch(Exception e) {
 			arr[0] = Integer.parseInt(fraction);
 			arr[1] = 1;
+		}
+		if(arr[1] < 0) {
+			arr[0] = (-1) * arr[0];
+			arr[1] = (-1) * arr[1];
 		}
 		return arr;
 	}
