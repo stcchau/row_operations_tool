@@ -1,5 +1,5 @@
 /**
- * 
+ * Please do not steal.
  */
 package row_operations_tool;
 
@@ -12,23 +12,25 @@ import javax.swing.*;
  *
  */
 public class SwitchFrame extends JFrame implements ActionListener {
-	private JRadioButton[] row1ButtonArray, row2ButtonArray;
-	private ButtonGroup group1 = new ButtonGroup();
-	private ButtonGroup group2 = new ButtonGroup();
-	private final JButton enterButton = new JButton("Enter");
-	private final int rows;
-	private int[] arr = new int[2];
 	
-	public SwitchFrame (String title, int length, int width, int rows) {
+	private final ButtonGroup BUTTON_GROUP_ONE = new ButtonGroup(), 
+			BUTTON_GROUP_TWO = new ButtonGroup();
+	private final JRadioButton[] ROW_ONE_BUTTON_ARRAY, ROW_TWO_BUTTON_ARRAY;
+	private final JButton ENTER_BUTTON = new JButton("Enter");
+	private final int ROWS;
+	private final MatrixFrame MATRIX_FRAME;
+	
+	public SwitchFrame (String title, int length, int width, int rows, MatrixFrame matrixFrame) {
 		
 		super(title);
-		this.rows = rows;
-		row1ButtonArray = new JRadioButton[rows];
-		row2ButtonArray = new JRadioButton[rows];
-		final JLabel row1Label = new JLabel("Row 1:"), 
-				row2Label = new JLabel("Row 2:");
+		ROWS = rows;
+		ROW_ONE_BUTTON_ARRAY = new JRadioButton[rows];
+		ROW_TWO_BUTTON_ARRAY = new JRadioButton[rows];
+		final JLabel row1Label = new JLabel("Select Row to Switch:"), 
+				row2Label = new JLabel("Select Row to Switch With:");
 		final JPanel row1Panel = new JPanel(), 
 				row2Panel = new JPanel();
+		this.MATRIX_FRAME = matrixFrame;
 		
 		setSize(length, width);
 		setLayout(new BorderLayout());
@@ -47,58 +49,62 @@ public class SwitchFrame extends JFrame implements ActionListener {
 		row2SubPanel.add(row2Label);
 		row2Panel.add(row2SubPanel);
 		
-		enterButton.addActionListener(this);
+		ENTER_BUTTON.addActionListener(this);
 		
 		for(int r = 0; r < rows; r++) {
 			row1SubPanel = new JPanel();
 			row1SubPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-			row1ButtonArray[r] = new JRadioButton(String.format("Row %s", r + 1));
-			group1.add(row1ButtonArray[r]);
-			row1SubPanel.add(row1ButtonArray[r]);
+			ROW_ONE_BUTTON_ARRAY[r] = new JRadioButton(String.format("Row %s", r + 1));
+			BUTTON_GROUP_ONE.add(ROW_ONE_BUTTON_ARRAY[r]);
+			row1SubPanel.add(ROW_ONE_BUTTON_ARRAY[r]);
 			row1Panel.add(row1SubPanel);
 			
 			row2SubPanel = new JPanel();
 			row2SubPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-			row2ButtonArray[r] = new JRadioButton(String.format("Row %s", r + 1));
-			group2.add(row2ButtonArray[r]);
-			row2SubPanel.add(row2ButtonArray[r]);
+			ROW_TWO_BUTTON_ARRAY[r] = new JRadioButton(String.format("Row %s", r + 1));
+			BUTTON_GROUP_TWO.add(ROW_TWO_BUTTON_ARRAY[r]);
+			row2SubPanel.add(ROW_TWO_BUTTON_ARRAY[r]);
 			row2Panel.add(row2SubPanel);
 		}
 		
 		add(row1Panel, BorderLayout.WEST);
 		add(row2Panel, BorderLayout.CENTER);
-		add(enterButton, BorderLayout.SOUTH);
+		add(ENTER_BUTTON, BorderLayout.SOUTH);
 		
 	}
 	
-	public int getRow1() {
-		for(int r = 0; r < rows; r++) {
-			if(row1ButtonArray[r].isSelected()) {
+	public int getRow1() throws Exception {
+		for(int r = 0; r < ROWS; r++) {
+			if(ROW_ONE_BUTTON_ARRAY[r].isSelected())
 				return r;
-			}
 		}
-		return 0;
+		throw new Exception();
 	}
 	
-	public int getRow2() {
-		for(int r = 0; r < rows; r++) {
-			if(row2ButtonArray[r].isSelected()) {
+	public int getRow2() throws Exception {
+		for(int r = 0; r < ROWS; r++) {
+			if(ROW_TWO_BUTTON_ARRAY[r].isSelected())
 				return r;
-			}
 		}
-		return 0;
+		throw new Exception();
 	}
-	
-	public void setSwitchArgs() {
-		arr[0] = getRow1();
-		arr[1] = getRow2();
-	}
+
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		if(event.getSource() == enterButton) {
-			setSwitchArgs();
-			Launcher.display1.display2.display3.switchRow(arr[0], arr[1]);
-			dispose();
+		if(event.getSource() == ENTER_BUTTON) {
+			try {
+				MATRIX_FRAME.switchRow(getRow1(), getRow2());
+				dispose();
+			}
+			catch(Exception e) {
+				try {
+					getRow1();
+					getRow2();
+				}
+				catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Both rows must be selected. Please try again.");
+				}
+			}
 		}
 	}
 }

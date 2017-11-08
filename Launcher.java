@@ -1,5 +1,5 @@
 /**
- * 
+ * Please do not steal.
  */
 package row_operations_tool;
 
@@ -8,8 +8,7 @@ package row_operations_tool;
  *
  */
 public class Launcher {
-	public static InfoFrame display1;
 	public static void main(String[] args) {
-		display1 = new InfoFrame("Matrices Tool", 300, 100);
+		new InfoFrame("Row Operations Tool", 300, 100);
 	}
 }
