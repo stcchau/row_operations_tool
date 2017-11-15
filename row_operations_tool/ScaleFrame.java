@@ -26,43 +26,18 @@ public class ScaleFrame extends JFrame implements ActionListener {
 		
 		super(title);
 		ROWS = rows;
-		ROW_BUTTON_ARRAY = new JRadioButton[rows];
-		final JLabel scaleRowLabel = new JLabel("Select Row to Scale:"), 
-				scalarLabel = new JLabel("Scalar:");
-		final JPanel rowPanel = new JPanel(), 
-				bottomPanel = new JPanel();
+		ROW_BUTTON_ARRAY = new JRadioButton[ROWS];
 		MATRIX_FRAME = matrixFrame;
 		
 		setSize(length, width);
 		setLayout(new BorderLayout());
 		setVisible(true);
 		
-		rowPanel.setLayout(new GridLayout(rows + 1, 1));
-		
-		JPanel rowSubPanel = new JPanel();
-		rowSubPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		rowSubPanel.add(scaleRowLabel);
-		rowPanel.add(rowSubPanel);
-		
 		MULTIPLY_BUTTON.addActionListener(this);
 		DIVIDE_BUTTON.addActionListener(this);
 		
-		bottomPanel.add(scalarLabel);
-		bottomPanel.add(SCALAR_TEXT_FIELD);
-		bottomPanel.add(MULTIPLY_BUTTON);
-		bottomPanel.add(DIVIDE_BUTTON);
-		
-		for(int r = 0; r < rows; r++) {
-			rowSubPanel = new JPanel();
-			rowSubPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-			ROW_BUTTON_ARRAY[r] = new JRadioButton(String.format("Row %s", r + 1));
-			BUTTON_GROUP.add(ROW_BUTTON_ARRAY[r]);
-			rowSubPanel.add(ROW_BUTTON_ARRAY[r]);
-			rowPanel.add(rowSubPanel);
-		}
-		
-		add(rowPanel, BorderLayout.CENTER);
-		add(bottomPanel, BorderLayout.SOUTH);
+		add(new RowPanel(), BorderLayout.CENTER);
+		add(new ButtonPanel(), BorderLayout.SOUTH);
 	}
 	
 	private int getRow() throws Exception {
@@ -130,6 +105,32 @@ public class ScaleFrame extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "All inputs must be integers or fractions. Please try again.");
 				}
 			}
+		}
+	}
+	
+	private class RowPanel extends JPanel {
+		public RowPanel() {
+			setLayout(new GridLayout(ROWS + 1, 1));
+			JPanel subPanel = new JPanel();
+			subPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+			subPanel.add(new JLabel("Select Row to Scale:"));
+			add(subPanel);
+			for(int r = 0; r < ROWS; r++) {
+				subPanel = new JPanel();
+				subPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+				ROW_BUTTON_ARRAY[r] = new JRadioButton(String.format("Row %s", r + 1));
+				BUTTON_GROUP.add(ROW_BUTTON_ARRAY[r]);
+				subPanel.add(ROW_BUTTON_ARRAY[r]);
+				add(subPanel);
+			}
+		}
+	}
+	private class ButtonPanel extends JPanel {
+		public ButtonPanel() {
+			add(new JLabel("Scalar:"));
+			add(SCALAR_TEXT_FIELD);
+			add(MULTIPLY_BUTTON);
+			add(DIVIDE_BUTTON);
 		}
 	}
 }

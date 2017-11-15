@@ -24,9 +24,9 @@ public class SwitchFrame extends JFrame implements ActionListener {
 		
 		super(title);
 		ROWS = rows;
-		ROW_ONE_BUTTON_ARRAY = new JRadioButton[rows];
-		ROW_TWO_BUTTON_ARRAY = new JRadioButton[rows];
-		this.MATRIX_FRAME = matrixFrame;
+		ROW_ONE_BUTTON_ARRAY = new JRadioButton[ROWS];
+		ROW_TWO_BUTTON_ARRAY = new JRadioButton[ROWS];
+		MATRIX_FRAME = matrixFrame;
 		
 		setSize(length, width);
 		setLayout(new BorderLayout());
@@ -37,10 +37,9 @@ public class SwitchFrame extends JFrame implements ActionListener {
 		add(new RowPanelOne(), BorderLayout.WEST);
 		add(new RowPanelTwo(), BorderLayout.CENTER);
 		add(ENTER_BUTTON, BorderLayout.SOUTH);
-		
 	}
 	
-	public int getRow1() throws Exception {
+	public int getRowOne() throws Exception {
 		for(int r = 0; r < ROWS; r++) {
 			if(ROW_ONE_BUTTON_ARRAY[r].isSelected())
 				return r;
@@ -48,7 +47,7 @@ public class SwitchFrame extends JFrame implements ActionListener {
 		throw new Exception();
 	}
 	
-	public int getRow2() throws Exception {
+	public int getRowTwo() throws Exception {
 		for(int r = 0; r < ROWS; r++) {
 			if(ROW_TWO_BUTTON_ARRAY[r].isSelected())
 				return r;
@@ -60,13 +59,13 @@ public class SwitchFrame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource() == ENTER_BUTTON) {
 			try {
-				MATRIX_FRAME.switchRow(getRow1(), getRow2());
+				MATRIX_FRAME.switchRow(getRowOne(), getRowTwo());
 				dispose();
 			}
 			catch(Exception e) {
 				try {
-					getRow1();
-					getRow2();
+					getRowOne();
+					getRowTwo();
 				}
 				catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, "Both rows must be selected. Please try again.");
@@ -76,12 +75,11 @@ public class SwitchFrame extends JFrame implements ActionListener {
 	}
 	
 	private class RowPanelOne extends JPanel {
-		private final JLabel rowLabel = new JLabel("Select Row to Switch:");
 		public RowPanelOne() {
 			setLayout(new GridLayout(ROWS + 1, 1));
 			JPanel subPanel = new JPanel();
 			subPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-			subPanel.add(rowLabel);
+			subPanel.add(new JLabel("Select Row to Switch:"));
 			add(subPanel);
 			for(int r = 0; r < ROWS; r++) {
 				subPanel = new JPanel();
@@ -94,12 +92,11 @@ public class SwitchFrame extends JFrame implements ActionListener {
 		}
 	}
 	private class RowPanelTwo extends JPanel {
-		private final JLabel rowLabel = new JLabel("Select Row to Switch With:");
 		public RowPanelTwo() {
 			setLayout(new GridLayout(ROWS + 1, 1));
 			JPanel subPanel = new JPanel();
 			subPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-			subPanel.add(rowLabel);
+			subPanel.add(new JLabel("Select Row to Switch With:"));
 			add(subPanel);
 			for(int r = 0; r < ROWS; r++) {
 				subPanel = new JPanel();

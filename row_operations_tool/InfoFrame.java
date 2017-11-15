@@ -13,13 +13,9 @@ import javax.swing.*;
  */
 public class InfoFrame extends JFrame implements ActionListener {
 	
-	private final JLabel ROWS_LABEL = new JLabel("Rows:");
-	private final JLabel COLUMN_LABEL = new JLabel("Columns:");
 	private final JTextField ROWS = new JTextField(1);
 	private final JTextField COLUMNS = new JTextField(1);
 	private final JButton ENTER_BUTTON = new JButton("Enter");
-	
-	public MatrixFillInFrame display2;
 	
 	public InfoFrame (String title, int length, int width) {
 		super(title);
@@ -28,9 +24,9 @@ public class InfoFrame extends JFrame implements ActionListener {
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		add(ROWS_LABEL);
+		add(new JLabel("Rows:"));
 		add(ROWS);
-		add(COLUMN_LABEL);
+		add(new JLabel("Columns:"));
 		add(COLUMNS);
 		add(ENTER_BUTTON);
 		

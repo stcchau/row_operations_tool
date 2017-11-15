@@ -30,10 +30,8 @@ public class MatrixFrame extends JFrame implements ActionListener {
 	public MatrixFrame(String title, int length, int width, Fraction[][] matrix, int rows, int columns) {
 		
 		super(title);
-		this.ROWS = rows;
-		this.COLUMNS = columns;
-		MatrixPanel matrixPanel = new MatrixPanel(matrix);
-		OperationPanel opPanel =  new OperationPanel();
+		ROWS = rows;
+		COLUMNS = columns;
 
 		setSize(length, width);
 		setLayout(new BorderLayout());
@@ -47,8 +45,8 @@ public class MatrixFrame extends JFrame implements ActionListener {
 		REDO_BUTTON.addActionListener(this);
 		NEW_MATRIX_BUTTON.addActionListener(this);
 		
-		add(matrixPanel, BorderLayout.CENTER);
-		add(opPanel, BorderLayout.SOUTH);
+		add(new MatrixPanel(matrix), BorderLayout.CENTER);
+		add(new OperationPanel(), BorderLayout.SOUTH);
 		addToHistory();
 	}
 

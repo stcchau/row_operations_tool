@@ -26,59 +26,19 @@ public class AdditionFrame extends JFrame implements ActionListener {
 		
 		super(title);
 		ROWS = rows;
-		ADDEE_BUTTON_ARRAY = new JRadioButton[rows];
-		ADDER_BUTTON_ARRAY = new JRadioButton[rows];
-		final JLabel addeeRowLabel = new JLabel("Select Row to Replace:"), 
-				adderRowLabel = new JLabel("Select Row to Add With:"), 
-				scalarLabel = new JLabel("Multiplier:");
-		final JPanel addeeRowPanel = new JPanel(), 
-				adderRowPanel = new JPanel(), 
-				bottomPanel = new JPanel();
+		ADDEE_BUTTON_ARRAY = new JRadioButton[ROWS];
+		ADDER_BUTTON_ARRAY = new JRadioButton[ROWS];
 		MATRIX_FRAME = matrixFrame;
 		
 		setSize(length, width);
 		setLayout(new BorderLayout());
 		setVisible(true);
 		
-		addeeRowPanel.setLayout(new GridLayout(rows + 1, 1));
-		adderRowPanel.setLayout(new GridLayout(rows + 1, 1));
-		bottomPanel.setLayout(new FlowLayout());
-		
-		JPanel addeeRowSubPanel = new JPanel();
-		addeeRowSubPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		addeeRowSubPanel.add(addeeRowLabel);
-		addeeRowPanel.add(addeeRowSubPanel);
-		
-		JPanel adderRowSubPanel = new JPanel();
-		adderRowSubPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		adderRowSubPanel.add(adderRowLabel);
-		adderRowPanel.add(adderRowSubPanel);
-		
 		ENTER_BUTTON.addActionListener(this);
 		
-		bottomPanel.add(scalarLabel);
-		bottomPanel.add(MULTIPLIER_TEXT_FIELD);
-		bottomPanel.add(ENTER_BUTTON);
-		
-		for(int r = 0; r < rows; r++) {
-			addeeRowSubPanel = new JPanel();
-			addeeRowSubPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-			ADDEE_BUTTON_ARRAY[r] = new JRadioButton(String.format("Row %s", r + 1));
-			BUTTON_GROUP_ONE.add(ADDEE_BUTTON_ARRAY[r]);
-			addeeRowSubPanel.add(ADDEE_BUTTON_ARRAY[r]);
-			addeeRowPanel.add(addeeRowSubPanel);
-			
-			adderRowSubPanel = new JPanel();
-			adderRowSubPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-			ADDER_BUTTON_ARRAY[r] = new JRadioButton(String.format("Row %s", r + 1));
-			BUTTON_GROUP_TWO.add(ADDER_BUTTON_ARRAY[r]);
-			adderRowSubPanel.add(ADDER_BUTTON_ARRAY[r]);
-			adderRowPanel.add(adderRowSubPanel);
-		}
-		
-		add(addeeRowPanel, BorderLayout.WEST);
-		add(adderRowPanel, BorderLayout.CENTER);
-		add(bottomPanel, BorderLayout.SOUTH);
+		add(new AddeeRowPanel(), BorderLayout.WEST);
+		add(new AdderRowPanel(), BorderLayout.CENTER);
+		add(new ButtonPanel(), BorderLayout.SOUTH);
 		
 	}
 	
@@ -130,6 +90,50 @@ public class AdditionFrame extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "All inputs must be integers or fractions. Please try again.");
 				}
 			}
+		}
+	}
+	private class AddeeRowPanel extends JPanel {
+		public AddeeRowPanel() {
+			setLayout(new GridLayout(ROWS + 1, 1));
+			JPanel subPanel = new JPanel();
+			subPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+			subPanel.add(new JLabel("Select Row to Replace:"));
+			add(subPanel);
+			for(int r = 0; r < ROWS; r++) {
+				subPanel = new JPanel();
+				subPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+				ADDEE_BUTTON_ARRAY[r] = new JRadioButton(String.format("Row %s", r + 1));
+				BUTTON_GROUP_ONE.add(ADDEE_BUTTON_ARRAY[r]);
+				subPanel.add(ADDEE_BUTTON_ARRAY[r]);
+				add(subPanel);
+			}
+		}
+	}
+	
+	private class AdderRowPanel extends JPanel {
+		private JLabel adderRowLabel = new JLabel("Select Row to Add With:");
+		public AdderRowPanel() {
+			setLayout(new GridLayout(ROWS + 1, 1));
+			JPanel subPanel = new JPanel();
+			subPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+			subPanel.add(adderRowLabel);
+			add(subPanel);
+			for(int r = 0; r < ROWS; r++) {
+				subPanel = new JPanel();
+				subPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+				ADDER_BUTTON_ARRAY[r] = new JRadioButton(String.format("Row %s", r + 1));
+				BUTTON_GROUP_TWO.add(ADDER_BUTTON_ARRAY[r]);
+				subPanel.add(ADDER_BUTTON_ARRAY[r]);
+				add(subPanel);
+			}
+		}
+	}
+	private class ButtonPanel extends JPanel {
+		public ButtonPanel() {
+			setLayout(new FlowLayout());
+			add(new JLabel("Multiplier:"));
+			add(MULTIPLIER_TEXT_FIELD);
+			add(ENTER_BUTTON);
 		}
 	}
 }

@@ -39,20 +39,6 @@ public class MatrixFillInFrame extends JFrame implements ActionListener {
 		add(ENTER_BUTTON, BorderLayout.SOUTH);
 	}
 	
-	private class TextFieldPanel extends JPanel {
-		public TextFieldPanel() {
-			setLayout(new GridLayout(ROWS, COLUMNS));
-			for(int row = 0; row < ROWS; row++) {
-				for(int column = 0; column < COLUMNS; column++) {
-					JPanel textFieldSubPanel = new JPanel();
-					textFieldSubPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-					textFieldSubPanel.add(J_TEXT_FIELD_MATRIX[row][column] = new JTextField(2));
-					add(textFieldSubPanel);
-				}
-			}
-		}
-	}
-	
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource() == ENTER_BUTTON) {
@@ -68,6 +54,20 @@ public class MatrixFillInFrame extends JFrame implements ActionListener {
 			}
 			catch(Exception e) {
 				JOptionPane.showMessageDialog(null, "All inputs must be integers or fractions. Please try again.");
+			}
+		}
+	}
+	
+	private class TextFieldPanel extends JPanel {
+		public TextFieldPanel() {
+			setLayout(new GridLayout(ROWS, COLUMNS));
+			for(int row = 0; row < ROWS; row++) {
+				for(int column = 0; column < COLUMNS; column++) {
+					JPanel textFieldSubPanel = new JPanel();
+					textFieldSubPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+					textFieldSubPanel.add(J_TEXT_FIELD_MATRIX[row][column] = new JTextField(2));
+					add(textFieldSubPanel);
+				}
 			}
 		}
 	}
