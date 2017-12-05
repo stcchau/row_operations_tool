@@ -39,6 +39,7 @@ public class AdditionFrame extends JFrame implements ActionListener {
 		add(new AddeeRowPanel(), BorderLayout.WEST);
 		add(new AdderRowPanel(), BorderLayout.CENTER);
 		add(new ButtonPanel(), BorderLayout.SOUTH);
+		
 	}
 	
 	private int getAddeeRow() throws Exception {
